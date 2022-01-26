@@ -27,15 +27,43 @@
 --------------------------------------------
 ------------     Задача 2.1     ------------
 --------------------------------------------
---create or alter proc KilometrajMejduDati @date2 datetime
---as 
---    select Brand + ' ' + Model as [Автомобил], MAX(ReturnMileage) as [Текущ километраж]
---	from Contracts as contracts
---    inner join Cars as cars
---    on cars.IdCar = contracts.IdCar
---    where ReturnDate <= @date2
---	group by Brand + ' ' + Model
+--create or alter function udf_Kilometri_data(
+--	@date datetime
+--)
+--returns @rtn_table table(CarId int, CarName nvarchar(40), Km int)
+--as
+--begin
+--	insert into @rtn_table
+--	select Cars.IdCar, Brand + ' ' + Model as [Car], SUM(ReturnMileage - RentMileage)
+--	from Cars
+--	left outer join (select * from Contracts where ReturnDate <= @date) as contracts
+--	on contracts.IdCar = Cars.IdCar
+--	group by Brand + ' ' + Model, Cars.IdCar
+--return
+--end
+
 --go
+
+--	select *
+--	from udf_Kilometri_data('2021-04-25 00:00:00.000')
+--------------------------------------------
+------------     Задача 2.2     ------------
+--------------------------------------------
+--create or alter proc udp_Kilometri_period
+--	@date1 datetime,
+--	@date2 datetime
+--as
+--begin
+--	select Cars.IdCar, Brand + ' ' + Model as [Car], SUM(ReturnMileage - RentMileage) as [Km]
+--	from Cars
+--	left outer join (select * from Contracts where RentDate >= @date1 and ReturnDate <= @date2) as contracts
+--	on contracts.IdCar = Cars.IdCar
+--	group by Brand + ' ' + Model, Cars.IdCar
+--end
+
+--go
+
+--exec udp_Kilometri_period @date1 = '2021-08-22 00:00:00.000', @date2 = '2021-12-11 00:00:00.000'
 
 --exec KilometrajMejduDati @date2 = '2021-11-06 00:00:00.000'
 --------------------------------------------
