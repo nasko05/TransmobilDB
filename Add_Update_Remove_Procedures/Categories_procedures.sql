@@ -1,52 +1,70 @@
-create or alter proc udp_UpdateCenorazpis
-	@IdCategory int,
-	@nCategory nvarchar(20) = null,
-	@nRentPerDay int = null
-as
-begin
-	declare @maxId int = cast((select max(IdCategory) from Categories) as int)
-	if(@IdCategory <= 0 or @IdCategory > @maxId)
-		print N'Invalid kategoriq id!'
-		return
+﻿--create or alter proc udp_UpdateCenorazpis
+--	@IdCategory int,
+--	@nCategory nvarchar(20) = null,
+--	@nRentPerDay int = null
+--as
+--begin
+--	declare @maxId int = cast((select max(IdCategory) from Categories) as int)
 
-	if @nCategory is not null
-		update Categories
-		set Categories.Name = @nCategory
-		where Categories.IdCategory = @IdCategory
+--	if(@IdCategory <= 0 or @IdCategory > @maxId)
+--	begin
+--		print N'Invalid kategoriq id!'
+--		return
+--	end
 
-	if @nRentPerDay is not null
-		update Categories
-		set RentPerDay = @nRentPerDay
-		where Categories.IdCategory = @IdCategory
-end
+--	if @nCategory is not null
+--	begin
+--		update Categories
+--		set Categories.Name = @nCategory
+--		where Categories.IdCategory = @IdCategory
+--	end
 
-go
+--	if @nRentPerDay is not null
+--	begin
+--		update Categories
+--		set RentPerDay = @nRentPerDay
+--		where Categories.IdCategory = @IdCategory
+--	end
 
-create or alter proc udp_DeleteCenorazpis
-	@IdCategory int
-as
-begin
-	declare @maxId int = cast((select max(IdCategory) from Categories) as int)
+--end
 
-	if @IdCategory > @maxId or @IdCategory <= 0
-		print N'Invalid kategoriq id!'
-	else
-		delete from Categories
-		where IdCategory = @IdCategory
-end
+--go
 
-go
+--	--exec udp_UpdateCenorazpis 3, @nRentPerDay = 500
 
-create or alter proc udp_InsertCenorazpis
-	@nCategory nvarchar(20) = null,
-	@nRentPerDay int = null
-as
-begin
-	if @nCategory is null or @nRentPerDay is null
-		print 'Invalid information!'
-	else
-		insert into Categories
-		values(@nCategory, @nRentPerDay)
-end
+--go
+--create or alter proc udp_DeleteCenorazpis
+--	@IdCategory int
+--as
+--begin
+--	declare @maxId int = cast((select max(IdCategory) from Categories) as int)
 
-go
+--	if @IdCategory > @maxId or @IdCategory <= 0
+--		print N'Invalid kategoriq id!'
+--	else
+--		delete from Categories
+--		where IdCategory = @IdCategory
+--end
+
+--go
+
+--	--exec udp_DeleteCenorazpis 5
+
+--go
+--create or alter proc udp_InsertCenorazpis
+--	@nCategory nvarchar(20) = null,
+--	@nRentPerDay int = null
+--as
+--begin
+--	if @nCategory is null or @nRentPerDay is null
+--		print N'Invalid information!'
+--	else
+--	begin
+--		insert into Categories
+--		values(@nCategory, @nRentPerDay)
+--	end
+--end
+
+--go
+
+----exec udp_InsertCenorazpis N'Джип', 200
