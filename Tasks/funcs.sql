@@ -45,7 +45,7 @@
 --go
 
 --	select *
---	from udf_Kilometri_data('2021-04-25 00:00:00.000')
+--	from udf_Kilometri_data('2022-01-27 00:00:00.000')
 --------------------------------------------
 ------------     Задача 2.2     ------------
 --------------------------------------------
@@ -63,7 +63,7 @@
 
 --go
 
---exec udp_Kilometri_period @date1 = '2021-08-22 00:00:00.000', @date2 = '2021-12-11 00:00:00.000'
+--exec udp_Kilometri_period @date1 = '2021-08-22 00:00:00.000', @date2 = '2021-09-10 00:00:00.000'
 --------------------------------------------
 ------------     Задача 3.1     ------------
 --------------------------------------------
@@ -141,13 +141,13 @@
 --	on contracts.IdRenter = renters.IdRenter
 --	inner join Categories as categories
 --	on cars.IdCategory = categories.IdCategory
---	where RenterName like '%' + N'Ради' + '%'
+--	where RenterName like '%' + @client + '%'
 --	group by RenterName
 --	return
 --end
 --go
 
---declare @client nvarchar(30) = N'Ради'
+--declare @client nvarchar(30) = N'РА'
 --select *
 --from dbo.udf_prihod_ime(@client)
 
